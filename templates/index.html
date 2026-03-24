@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Driver Drowsiness Detection</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+
+<body>
+  <!-- ── Background particles ── -->
+  <div class="bg-particles" aria-hidden="true">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+  </div>
+
+  <div class="app-wrapper">
+
+    <!-- ── Header ── -->
+    <header class="hero">
+      <div class="hero-icon">
+        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="32" cy="32" r="30" stroke="currentColor" stroke-width="3" />
+          <ellipse cx="21" cy="30" rx="7" ry="9" fill="currentColor" opacity=".9" />
+          <ellipse cx="43" cy="30" rx="7" ry="9" fill="currentColor" opacity=".9" />
+          <path d="M20 46 Q32 54 44 46" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+        </svg>
+      </div>
+      <h1>Driver Drowsiness<br /><span class="accent">Detection System</span></h1>
+      <p class="subtitle">Real-time neural network analysis of driver fatigue indicators</p>
+    </header>
+
+    <main class="main-grid">
+
+      <!-- ── Input Form ── -->
+      <section class="card form-card">
+        <h2 class="card-title">
+          <span class="dot dot-blue"></span>Sensor &amp; Driver Data
+        </h2>
+
+        <form id="prediction-form" novalidate>
+
+          <!-- Gender -->
+          <div class="form-group gender-group">
+            <label class="form-label">Gender</label>
+            <div class="radio-group">
+              <label class="radio-btn">
+                <input type="radio" name="gender" value="Male" checked />
+                <span>Male</span>
+              </label>
+              <label class="radio-btn">
+                <input type="radio" name="gender" value="Female" />
+                <span>Female</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Numeric sliders -->
+          <div class="sliders-grid">
+
+            <div class="form-group">
+              <label class="form-label" for="age">Age <span class="val-badge" id="age-val">35</span></label>
+              <input type="range" id="age" class="slider" min="18" max="64" value="35" step="1" />
+              <div class="range-labels"><span>18</span><span>64</span></div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="blink_rate">Blink Rate (per min) <span class="val-badge"
+                  id="blink_rate-val">25</span></label>
+              <input type="range" id="blink_rate" class="slider" min="10" max="41" value="25" step="1" />
+              <div class="range-labels"><span>10</span><span>41</span></div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="eye_closure">Eye Closure Duration (ms) <span class="val-badge"
+                  id="eye_closure-val">30</span></label>
+              <input type="range" id="eye_closure" class="slider" min="5" max="60" value="30" step="0.5" />
+              <div class="range-labels"><span>5</span><span>60</span></div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="yawning">Yawning Count <span class="val-badge"
+                  id="yawning-val">3</span></label>
+              <input type="range" id="yawning" class="slider" min="0" max="7" value="3" step="1" />
+              <div class="range-labels"><span>0</span><span>7</span></div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="heart_rate">Heart Rate (BPM) <span class="val-badge"
+                  id="heart_rate-val">80</span></label>
+              <input type="range" id="heart_rate" class="slider" min="60" max="109" value="80" step="1" />
+              <div class="range-labels"><span>60</span><span>109</span></div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="head_tilt">Head Tilt Angle (°) <span class="val-badge"
+                  id="head_tilt-val">10</span></label>
+              <input type="range" id="head_tilt" class="slider" min="0" max="25" value="10" step="0.1" />
+              <div class="range-labels"><span>0°</span><span>25°</span></div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="steering">Steering Variation <span class="val-badge"
+                  id="steering-val">0.80</span></label>
+              <input type="range" id="steering" class="slider" min="0.10" max="1.50" value="0.80" step="0.01" />
+              <div class="range-labels"><span>0.10</span><span>1.50</span></div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="reaction">Reaction Time (s) <span class="val-badge"
+                  id="reaction-val">1.10</span></label>
+              <input type="range" id="reaction" class="slider" min="0.20" max="2.00" value="1.10" step="0.01" />
+              <div class="range-labels"><span>0.20s</span><span>2.00s</span></div>
+            </div>
+
+            <div class="form-group full-width">
+              <label class="form-label" for="sleep">Sleep Hours Last Night <span class="val-badge"
+                  id="sleep-val">6.0</span></label>
+              <input type="range" id="sleep" class="slider" min="2" max="9" value="6" step="0.5" />
+              <div class="range-labels"><span>2h</span><span>9h</span></div>
+            </div>
+
+          </div>
+
+          <button type="submit" class="predict-btn" id="predict-btn">
+            <span class="btn-text">Analyze Driver State</span>
+            <span class="btn-spinner" hidden></span>
+          </button>
+        </form>
+      </section>
+
+      <!-- ── Result Panel ── -->
+      <aside class="card result-card" id="result-card">
+
+        <!-- Gauge -->
+        <div class="gauge-wrap">
+          <svg class="gauge-svg" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
+            <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="#1e2a3a" stroke-width="16"
+              stroke-linecap="round" />
+            <path id="gauge-fill" d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="#3b82f6" stroke-width="16"
+              stroke-linecap="round" stroke-dasharray="251.2" stroke-dashoffset="251.2"
+              style="transition: stroke-dashoffset 1s cubic-bezier(.4,0,.2,1), stroke 0.5s;" />
+            <line id="gauge-needle" x1="100" y1="100" x2="100" y2="30" stroke="#fff" stroke-width="3"
+              stroke-linecap="round"
+              style="transform-origin:100px 100px; transform:rotate(-90deg); transition:transform 1s cubic-bezier(.4,0,.2,1);" />
+            <circle cx="100" cy="100" r="7" fill="#fff" />
+          </svg>
+          <div class="gauge-label">
+            <span id="gauge-pct">–</span>
+            <small>Risk Score</small>
+          </div>
+        </div>
+
+        <!-- Status badge -->
+        <div class="status-badge idle" id="status-badge">
+          <span id="status-icon"></span>
+          <span id="status-text">Awaiting Analysis</span>
+        </div>
+
+        <!-- Probability bar -->
+        <div class="prob-bar-wrap">
+          <div class="prob-bar-labels">
+            <span>Alert</span><span>Drowsy</span>
+          </div>
+          <div class="prob-track">
+            <div class="prob-fill" id="prob-fill" style="width:0%"></div>
+            <div class="prob-marker" style="left:46%"></div>
+          </div>
+          <div class="prob-bar-sub">
+            <span id="prob-pct-label">—</span>
+          </div>
+        </div>
+
+        <!-- ── Dynamic Reasons Box (replaces static tips) ── -->
+        <div class="reasons-box hidden" id="reasons-box">
+          <!-- filled dynamically by app.js -->
+        </div>
+
+        <!-- Placeholder shown before first prediction -->
+        <div class="reasons-placeholder" id="reasons-placeholder">
+          <p>Run an analysis to see why<br />the model made its decision.</p>
+        </div>
+
+      </aside>
+    </main>
+
+    <footer class="footer">
+      <p>Powered by a Keras ANN model · Flask API · Built for safety</p>
+    </footer>
+  </div>
+
+  <script src="/static/app.js"></script>
+  <script>
+    // Hide placeholder once reasons are shown
+    const observer = new MutationObserver(() => {
+      const box = document.getElementById('reasons-box');
+      const placeholder = document.getElementById('reasons-placeholder');
+      if (box && !box.classList.contains('hidden')) {
+        placeholder.style.display = 'none';
+      }
+    });
+    observer.observe(document.getElementById('reasons-box'), { attributes: true });
+  </script>
+</body>
+
+</html>
