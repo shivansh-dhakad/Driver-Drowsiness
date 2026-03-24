@@ -61,7 +61,6 @@ def predict():
         X_prep = preprocessor.transform(df_input)
         prob = float(model.predict(X_prep).ravel()[0])
         drowsy = prob >= THRESHOLD
-        print(drowsy,prob,"-------------------------------------------------------------")
         return jsonify({
             "drowsy": bool(drowsy),
             "probability": round(prob, 4),
